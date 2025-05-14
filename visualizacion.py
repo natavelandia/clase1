@@ -12,19 +12,16 @@ from tkinter.scrolledtext import ScrolledText
 
 data = pd.read_csv("adult.csv")
 analizar = DataAnalyzer(data)
-analizar.summary()
-analizar.correlation_matrix()
-analizar.categorical_analisis()
+salida = analizar.summary()
+#analizar.correlation_matrix()
+#analizar.categorical_analisis()
 
+print(salida)
 
-data = pd.read_csv("vehicles.csv")
-analizar = DataAnalyzer(data)
-analizar.summary()
-analizar.correlation_matrix()
-analizar.categorical_analisis()
-
-
-
+def mostrar():
+    text_area.delete('1.0', tk.END)
+    #result = analizar.summary()
+    text_area.insert(tk.END, salida)
 # --- Interfaz gráfica ---
 root = tk.Tk()
 root.title("Análisis de Datos con Pandas")
@@ -38,7 +35,7 @@ text_area.pack()
 btns_frame = tk.Frame(root)
 btns_frame.pack(pady=10)
 
-tk.Button(btns_frame, text="Resumen Básico").grid(row=0, column=0, padx=5)
+tk.Button(btns_frame, text="Resumen Básico", command=mostrar).grid(row=0, column=0, padx=5)
 tk.Button(btns_frame, text="Análisis Categórico").grid(row=0, column=1, padx=5)
 tk.Button(btns_frame, text="Análisis Numérico").grid(row=0, column=2, padx=5)
 

@@ -5,14 +5,25 @@ import matplotlib.pyplot as plt
 # Seaborn para visualizaciones más estilizadas
 import seaborn as sns
 import os
-
+import io
 class DataAnalyzer:
   def __init__(self, data):
     self.df = data
 
   def summary(self):
-    print(self.df.info())
-    print(self.df.describe())
+    buffer = io.StringIO()
+    
+    # Capturar la salida de info()
+    self.df.info(buf=buffer)
+    salida_info = buffer.getvalue()
+    
+    # Capturar la salida de describe()
+    salida_describe = self.df.describe().to_string()
+    
+    # Unir ambas salidas
+    salida = salida_info + "\n\n" + salida_describe
+    return salida
+    
   def missing_values(self):
     return self.df.isnull()
   def imprimir(self):
